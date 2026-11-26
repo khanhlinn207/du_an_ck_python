@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<header class="hero">
+  <div class="container">
+    <p class="eyebrow">{{ sv.truong }}</p>
+    <h1>{{ sv.de_tai }}</h1>
+    <p class="sub">Đề thi kết thúc học phần: {{ sv.mon }}</p>
+    <dl class="info">
+      <div><dt>Sinh viên thực hiện</dt><dd>{{ sv.ten }}</dd></div>
+      <div><dt>Mã số sinh viên</dt><dd>{{ sv.mssv }}</dd></div>
+      <div><dt>Lớp</dt><dd>{{ sv.lop }}</dd></div>
+      <div><dt>Giảng viên hướng dẫn</dt><dd>{{ sv.gvhd }}</dd></div>
+    </dl>
+  </div>
+</header>
+<main class="container">
+  <h2 class="section-title">4 mục của dự án</h2>
+  <div class="cards">
+    {% for m in muc %}
+    <a class="card mucs" href="{{ m.url }}">
+      <span class="num">{{ m.so }}</span>
+      <h3>{{ m.ten }}</h3>
+      <p>{{ m.mo_ta }}</p>
+      <div>{% for n in m.nhan %}<span class="tag">{{ n }}</span>{% endfor %}</div>
+    </a>
+    {% endfor %}
+  </div>
+  <section class="card">
+    <h2>Công nghệ sử dụng</h2>
+    <p>Python, NumPy, Pandas, Matplotlib, Seaborn, Plotly, scikit-learn, ipywidgets, Voilà, FastAPI. Triển khai trên Render từ kho GitHub.</p>
+  </section>
+</main>
+{% endblock %}

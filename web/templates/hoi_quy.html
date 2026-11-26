@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% from "_macros.html" import widget_btn %}
+{% block title %}Hồi quy tuyến tính{% endblock %}
+{% block content %}
+<header class="page-head"><div class="container"><h1>3. Hồi quy tuyến tính: tuổi, BMI và cholesterol</h1>
+<p>Dữ liệu health.csv (18 quan sát), mô hình LinearRegression của scikit-learn.</p></div></header>
+<main class="container">
+  <section class="card">
+    <h2>Widget (ipywidgets)</h2>
+    <p>Widget tính chỉ số BMI và widget dự đoán cholesterol từ chiều cao, cân nặng, tuổi.</p>
+    {{ widget_btn(widgets_url, 'regression.ipynb', 'Mở widget hồi quy') }}
+  </section>
+
+  <section class="card">
+    <h2>Dự đoán nhanh</h2>
+    <form method="get" class="filter">
+      <label>Tuổi <input type="number" name="tuoi" value="{{ tuoi }}" min="1" max="120"></label>
+      <label>Chiều cao (cm) <input type="number" name="cao" value="{{ cao }}" min="100" max="220"></label>
+      <label>Cân nặng (kg) <input type="number" name="nang" value="{{ nang }}" min="20" max="250"></label>
+      <button class="btn" type="submit">Dự đoán</button>
+    </form>
+    <div class="kpis">
+      <article><b>{{ kq.bmi }}</b><span>BMI (kg/m²)</span></article>
+      <article><b>{{ kq.loai }}</b><span>Nguy cơ: {{ kq.nguy_co }}</span></article>
+      <article><b>{{ kq.chol }}</b><span>Cholesterol dự đoán</span></article>
+    </div>
+    {% if kq.ngoai_pham_vi %}<p class="note warn">Lưu ý: giá trị nằm ngoài phạm vi dữ liệu huấn luyện nên kết quả kém tin cậy.</p>{% endif %}
+  </section>
+
+  <section class="card">
+    <h2>Ba mô hình hồi quy</h2>
+    <div class="table-wrap"><table class="bang">
+      <thead><tr><th>Mô hình</th><th>Hệ số</th><th>Hằng số</th><th>R²</th></tr></thead>
+      <tbody>{% for ten, m in cac_mo_hinh %}
+        <tr><td>{{ ten }}</td><td>{{ m.coef | map('round', 4) | join(', ') }}</td><td>{{ '%.3f' | format(m.intercept) }}</td><td>{{ '%.3f' | format(m.r2) }}</td></tr>
+      {% endfor %}</tbody>
+    </table></div>
+    <img class="chart" src="/charts/hoi_quy.png" alt="Ba mô hình hồi quy">
+    <p class="note">Tuổi giải thích tốt nhất cholesterol; thêm BMI chỉ tăng R² rất ít. Dữ liệu chỉ có 18 mẫu và R² tính trên chính dữ liệu huấn luyện nên chỉ mang tính minh họa.</p>
+  </section>
+
+  <section class="card">
+    <h2>Tương quan</h2>
+    <img class="chart small" src="/charts/tuong_quan.png" alt="Heatmap tương quan">
+  </section>
+</main>
+{% endblock %}

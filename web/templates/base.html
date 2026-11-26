@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ sv.de_tai }}{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+</head>
+<body>
+<nav class="nav">
+  <div class="container nav-in">
+    <a class="brand" href="/">Dự án Python</a>
+    <div class="links">
+      {% for m in muc %}<a href="{{ m.url }}" class="{{ 'on' if request.url.path == m.url else '' }}">{{ m.so }}. {{ m.ten }}</a>{% endfor %}
+    </div>
+  </div>
+</nav>
+{% block content %}{% endblock %}
+<footer class="foot">
+  <div class="container">{{ sv.ten }} &middot; MSSV {{ sv.mssv }} &middot; Lớp {{ sv.lop }} &middot; {{ sv.mon }}</div>
+</footer>
+</body>
+</html>

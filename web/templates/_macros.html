@@ -1,0 +1,8 @@
+{% macro widget_btn(widgets_url, notebook, nhan) %}
+{% if widgets_url %}
+<a class="btn btn-widget" href="{{ widgets_url }}/voila/render/{{ notebook }}" target="_blank" rel="noopener">{{ nhan }} &rarr;</a>
+<p class="note">Widget chạy bằng ipywidgets + Voilà. Lần mở đầu có thể mất 30-60 giây vì dịch vụ miễn phí cần khởi động.</p>
+{% else %}
+<p class="note warn">Chưa cấu hình địa chỉ widget. Trên Render, thêm biến môi trường <code>WIDGETS_URL</code> (địa chỉ dịch vụ Voilà) cho dịch vụ này.</p>
+{% endif %}
+{% endmacro %}

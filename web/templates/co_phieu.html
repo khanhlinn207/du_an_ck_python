@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% from "_macros.html" import widget_btn %}
+{% block title %}Phân tích giá cổ phiếu{% endblock %}
+{% block content %}
+<header class="page-head"><div class="container"><h1>2. Bảng điều khiển phân tích giá cổ phiếu</h1>
+<p>Dữ liệu abc-16.csv: 365 phiên giao dịch, giá tham chiếu, trần (+10%), sàn (-10%).</p></div></header>
+<main class="container">
+  <section class="card">
+    <h2>Widget (ipywidgets)</h2>
+    <p>Bảng điều khiển 3 module: bộ lọc và nút điều khiển, bảng số liệu, biểu đồ.</p>
+    {{ widget_btn(widgets_url, 'stock.ipynb', 'Mở widget cổ phiếu') }}
+  </section>
+
+  <section class="card">
+    <h2>Bộ lọc</h2>
+    <form method="get" class="filter">
+      <label>Từ ngày thứ <input type="number" name="tu" value="{{ tu }}" min="1" max="365"></label>
+      <label>đến ngày thứ <input type="number" name="den" value="{{ den }}" min="1" max="365"></label>
+      <label>Loại giá
+        <select name="loai">{% for k, v in loai_ds.items() %}<option value="{{ k }}" {{ 'selected' if k == loai else '' }}>{{ v }}</option>{% endfor %}</select></label>
+      <label>Biểu đồ
+        <select name="kieu"><option value="line" {{ 'selected' if kieu == 'line' else '' }}>Đường</option><option value="candle" {{ 'selected' if kieu == 'candle' else '' }}>Nến</option></select></label>
+      <button class="btn" type="submit">Cập nhật</button>
+      <a class="btn btn-ghost" href="/co-phieu">Đặt lại</a>
+    </form>
+    <div class="kpis">
+      <article><b>{{ tom_tat.so_ngay }}</b><span>Số ngày</span></article>
+      <article><b>{{ tom_tat.trung_binh }}</b><span>{{ ten_loai }} trung bình</span></article>
+      <article><b>{{ tom_tat.cao_nhat }}</b><span>Cao nhất</span></article>
+      <article><b>{{ tom_tat.thap_nhat }}</b><span>Thấp nhất</span></article>
+    </div>
+    <p class="chips">{% for k, v in tom_tat.dem.items() %}<span class="chip s-{{ loop.index }}">{{ k }}: {{ v }}</span>{% endfor %}</p>
+  </section>
+
+  <section class="card"><h2>Biểu đồ</h2>{{ chart | safe }}</section>
+  <section class="card"><h2>Bảng số liệu (15 dòng đầu)</h2><div class="table-wrap">{{ bang | safe }}</div></section>
+  <section class="card"><h2>Giá theo tháng (cả năm)</h2><img class="chart" src="/charts/co_phieu_thang.png" alt="Giá theo tháng"></section>
+</main>
+{% endblock %}

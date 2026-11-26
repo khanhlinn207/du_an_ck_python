@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}GDP và lạm phát{% endblock %}
+{% block content %}
+<header class="page-head"><div class="container"><h1>4. Lạm phát và tăng trưởng GDP của Việt Nam</h1>
+<p>Dữ liệu 1996-2024 (29 năm), biểu đồ vẽ bằng seaborn.</p></div></header>
+<main class="container">
+  <section class="card">
+    <div class="kpis">
+      <article><b>{{ f.gdp_tb }}%</b><span>GDP trung bình/năm</span></article>
+      <article><b>{{ f.lp_tb }}%</b><span>Lạm phát trung bình/năm</span></article>
+      <article><b>{{ f.lp_max }}%</b><span>Lạm phát cao nhất ({{ f.lp_max_nam }})</span></article>
+      <article><b>{{ f.tuong_quan }}</b><span>Hệ số tương quan GDP - lạm phát</span></article>
+    </div>
+  </section>
+  <section class="card"><h2>GDP và lạm phát qua các năm</h2>
+    <img class="chart" src="/charts/gdp_duong.png" alt="Biểu đồ đường GDP và lạm phát">
+    <ul>
+      <li>Tăng trưởng GDP khá ổn định: thấp nhất {{ f.gdp_min }}% ({{ f.gdp_min_nam }}), cao nhất {{ f.gdp_max }}% ({{ f.gdp_max_nam }}).</li>
+      <li>Lạm phát biến động mạnh hơn: đỉnh {{ f.lp_max }}% năm {{ f.lp_max_nam }}, thấp nhất {{ f.lp_min }}% năm {{ f.lp_min_nam }}.</li>
+    </ul>
+  </section>
+  <section class="card"><h2>Quan hệ giữa GDP và lạm phát</h2>
+    <img class="chart small" src="/charts/gdp_tuong_quan.png" alt="Đồ thị tương quan">
+    <p>Hệ số tương quan chỉ là {{ f.tuong_quan }}, tức hầu như không có quan hệ tuyến tính giữa hai chỉ tiêu trong cùng một năm.</p>
+  </section>
+  <section class="card"><h2>Trung bình theo giai đoạn 5 năm</h2>
+    <img class="chart" src="/charts/gdp_giai_doan.png" alt="Trung bình theo giai đoạn">
+    <div class="table-wrap">{{ giai_doan | safe }}</div>
+  </section>
+</main>
+{% endblock %}
